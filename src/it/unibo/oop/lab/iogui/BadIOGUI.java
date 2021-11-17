@@ -42,10 +42,16 @@ public class BadIOGUI {
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        /* 01.01: Create smaller panel for button */
         final JPanel pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
         canvas.add(pane, BorderLayout.CENTER);
         pane.add(write);
+
+        /* 01.02: Read button */
+        final JButton read = new JButton("Read from file");
+        pane.add(read);
+
         /*
          * Handlers
          */
@@ -66,6 +72,15 @@ public class BadIOGUI {
                     e1.printStackTrace();
                 }
             }
+        });
+        read.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                System.out.println("Read button pressed");
+
+            }
+
         });
     }
 
