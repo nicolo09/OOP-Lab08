@@ -6,8 +6,12 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Random;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -77,10 +81,14 @@ public class BadIOGUI {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                System.out.println("Read button pressed");
-
+                try {
+                    final Path p = Paths.get(PATH);
+                    System.out.println(Files.readAllLines(p));
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(frame, ex, "Error on IO", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
             }
-
         });
     }
 
