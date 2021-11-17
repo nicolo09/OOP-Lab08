@@ -3,6 +3,8 @@ package it.unibo.oop.lab.mvc;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -44,8 +46,8 @@ public final class SimpleGUI {
      * builds a new {@link SimpleGUI}.
      */
     public SimpleGUI() {
-        Controller cont = new ControllerImpl();
-        
+        final Controller cont = new ControllerImpl();
+
         /*
          * Make the frame half the resolution of the screen. This very method is enough
          * for a single screen setup. In case of multiple monitors, the primary is
@@ -89,6 +91,25 @@ public final class SimpleGUI {
 
         mainPanel.add(bottomButtons, BorderLayout.SOUTH);
 
+        /*
+         * Handlers
+         */
+        print.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                cont.setString(input.getText());
+                cont.printCurrent();
+            }
+        });
+
+        showHistory.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                history.setText(cont.history().toString());
+            }
+        });
+
+        // Show
         frame.setVisible(true);
     }
 
