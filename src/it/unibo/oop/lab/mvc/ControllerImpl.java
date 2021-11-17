@@ -6,23 +6,36 @@ import java.util.List;
 public class ControllerImpl implements Controller {
 
     private String current;
-    private List<String> printList = new ArrayList<>();
+    private final List<String> printList = new ArrayList<>();
 
+    /**
+     * Sets a string as the current of this controller.
+     * 
+     */
     @Override
     public void setString(final String s) throws IllegalArgumentException {
         this.current = s;
     }
 
+    /**
+     * @return the current set string
+     */
     @Override
     public String getString() {
         return this.current;
     }
 
+    /**
+     * @return the printing history
+     */
     @Override
     public List<String> history() {
         return new ArrayList<String>(printList);
     }
 
+    /**
+     * Prints the current set string on stdout.
+     */
     @Override
     public void printCurrent() throws IllegalStateException {
         if (current != null) {
