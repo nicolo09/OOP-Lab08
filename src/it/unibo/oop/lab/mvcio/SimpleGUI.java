@@ -1,9 +1,18 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
 
 /**
  * A very simple program using a graphical interface.
@@ -57,6 +66,37 @@ public final class SimpleGUI {
          * on screen. Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        final JPanel mainPanel = new JPanel(new BorderLayout());
+        frame.add(mainPanel);
+
+        final JTextArea textField = new JTextArea();
+        mainPanel.add(textField, BorderLayout.CENTER);
+
+        final JButton save = new JButton("Save");
+        mainPanel.add(save, BorderLayout.SOUTH);
+
+        /*
+         * Handlers
+         */
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                try {
+                    new Controller().write(textField.getText());
+                } catch (IOException e1) {
+                    JOptionPane.showMessageDialog(frame, e1, "IO Error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+        frame.setVisible(true);
     }
 
+    public static void main(final String... args) {
+        new SimpleGUI();
+    }
 }
