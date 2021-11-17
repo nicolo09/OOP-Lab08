@@ -1,5 +1,7 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.io.File;
+
 /**
  * 
  */
@@ -27,5 +29,23 @@ public class Controller {
      * System.getProperty("file.separator"). The combined use of those methods leads
      * to a software that runs correctly on every platform.
      */
+    private File currentFile;
 
+    /**
+     * Set a file as the current file.
+     * @param f the file to set as current
+     */
+    public void setFile(final File f) {
+        this.currentFile = f.getAbsoluteFile();
+    }
+
+    /**
+     * 
+     * @return the current file
+     */
+    public File getFile() {
+        return this.currentFile.getAbsoluteFile();
+    }
+
+    
 }
