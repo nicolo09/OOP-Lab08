@@ -1,10 +1,9 @@
 package it.unibo.oop.lab.mvcio;
 
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * 
@@ -12,9 +11,8 @@ import java.io.OutputStream;
 public class Controller {
 
     /*
-     * This class must implement a simple controller responsible of I/O access.
-     * It considers a single file at a time, and it is able to serialize objects
-     * in it.
+     * This class must implement a simple controller responsible of I/O access. It
+     * considers a single file at a time, and it is able to serialize objects in it.
      * 
      * Implement this class with:
      * 
@@ -24,15 +22,15 @@ public class Controller {
      * 
      * 3) A method for getting the path (in form of String) of the current File
      * 
-     * 4) A method that gets a String as input and saves its content on the
-     * current file. This method may throw an IOException.
+     * 4) A method that gets a String as input and saves its content on the current
+     * file. This method may throw an IOException.
      * 
-     * 5) By default, the current file is "output.txt" inside the user home
-     * folder. A String representing the local user home folder can be accessed
-     * using System.getProperty("user.home"). The separator symbol (/ on *nix, \
-     * on Windows) can be obtained as String through the method
-     * System.getProperty("file.separator"). The combined use of those methods
-     * leads to a software that runs correctly on every platform.
+     * 5) By default, the current file is "output.txt" inside the user home folder.
+     * A String representing the local user home folder can be accessed using
+     * System.getProperty("user.home"). The separator symbol (/ on *nix, \ on
+     * Windows) can be obtained as String through the method
+     * System.getProperty("file.separator"). The combined use of those methods leads
+     * to a software that runs correctly on every platform.
      */
 
     private File currentFile;
@@ -47,7 +45,7 @@ public class Controller {
      * Set a file as the current file.
      * 
      * @param f
-     *            the file to set as current
+     *              the file to set as current
      */
     public void setFile(final File f) {
         this.currentFile = f.getAbsoluteFile();
@@ -76,10 +74,6 @@ public class Controller {
      * @throws IOException
      */
     public void write(final String input) throws IOException {
-        try (OutputStream stream = new FileOutputStream(currentFile); 
-             DataOutputStream output = new DataOutputStream(stream);
-        ) {
-            output.writeUTF(input);
-        }
+        Files.writeString(Paths.get(currentFile.toURI()), input);
     }
 }
