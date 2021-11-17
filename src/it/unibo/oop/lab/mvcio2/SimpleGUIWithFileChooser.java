@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -14,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import it.unibo.oop.lab.mvcio.*;
+import it.unibo.oop.lab.mvcio.Controller;
 
 /**
  * A very simple program using a graphical interface.
@@ -23,7 +22,7 @@ import it.unibo.oop.lab.mvcio.*;
 public final class SimpleGUIWithFileChooser {
 
     /*
-     * TODO: Starting from the application in mvcio:
+     * 
      * 
      * 1) Add a JTextField and a button "Browse..." on the upper part of the
      * graphical interface. Suggestion: use a second JPanel with a second
@@ -49,7 +48,7 @@ public final class SimpleGUIWithFileChooser {
      */
 
     private static final int PROPORTION = 5;
-    private Controller controller = new Controller();
+    private final Controller controller = new Controller();
 
     SimpleGUIWithFileChooser() {
         final JFrame frame = new JFrame();
