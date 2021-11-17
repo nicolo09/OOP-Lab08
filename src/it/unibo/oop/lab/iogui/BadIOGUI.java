@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -24,8 +25,7 @@ import javax.swing.JPanel;
 public class BadIOGUI {
 
     private static final String TITLE = "A very simple GUI application";
-    private static final String PATH = System.getProperty("user.home")
-            + System.getProperty("file.separator")
+    private static final String PATH = System.getProperty("user.home") + System.getProperty("file.separator")
             + BadIOGUI.class.getSimpleName() + ".txt";
     private static final int PROPORTION = 5;
     private final Random rng = new Random();
@@ -41,6 +41,11 @@ public class BadIOGUI {
         canvas.add(write, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        final JPanel pane = new JPanel();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
+        canvas.add(pane, BorderLayout.CENTER);
+        pane.add(write);
         /*
          * Handlers
          */
@@ -50,9 +55,9 @@ public class BadIOGUI {
                 /*
                  * This would be VERY BAD in a real application.
                  * 
-                 * This makes the Event Dispatch Thread (EDT) work on an I/O
-                 * operation. I/O operations may take a long time, during which
-                 * your UI becomes completely unresponsive.
+                 * This makes the Event Dispatch Thread (EDT) work on an I/O operation. I/O
+                 * operations may take a long time, during which your UI becomes completely
+                 * unresponsive.
                  */
                 try (PrintStream ps = new PrintStream(PATH)) {
                     ps.print(rng.nextInt());
@@ -67,22 +72,25 @@ public class BadIOGUI {
     private void display() {
         /*
          * Make the frame one fifth the resolution of the screen. This very method is
-         * enough for a single screen setup. In case of multiple monitors, the
-         * primary is selected. In order to deal coherently with multimonitor
-         * setups, other facilities exist (see the Java documentation about this
-         * issue). It is MUCH better than manually specify the size of a window
-         * in pixel: it takes into account the current resolution.
+         * enough for a single screen setup. In case of multiple monitors, the primary
+         * is selected. In order to deal coherently with multimonitor setups, other
+         * facilities exist (see the Java documentation about this issue). It is MUCH
+         * better than manually specify the size of a window in pixel: it takes into
+         * account the current resolution.
          */
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
         frame.setSize(sw / PROPORTION, sh / PROPORTION);
         /*
-         * Instead of appearing at (0,0), upper left corner of the screen, this
-         * flag makes the OS window manager take care of the default positioning
-         * on screen. Results may vary, but it is generally the best choice.
+         * Instead of appearing at (0,0), upper left corner of the screen, this flag
+         * makes the OS window manager take care of the default positioning on screen.
+         * Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+
+        frame.pack();
+
         /*
          * OK, ready to pull the frame onscreen
          */
@@ -90,9 +98,10 @@ public class BadIOGUI {
     }
 
     /**
-     * @param args ignored
+     * @param args
+     *                 ignored
      */
     public static void main(final String... args) {
-       new BadIOGUI().display();
+        new BadIOGUI().display();
     }
 }
