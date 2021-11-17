@@ -41,21 +41,26 @@ public class MiniGUI {
         canvas.add(write, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        canvas.add(panel);
+
+        panel.add(write);
+        final TextField result = new TextField();
+        canvas.add(result, BorderLayout.NORTH);
         /*
          * Handlers
          */
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                System.out.println(rng.nextInt());
+                final int number = rng.nextInt();
+                System.out.println(number);
+                result.setText(Integer.toString(number));
             }
         });
 
-        final JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        frame.setContentPane(panel);
-        panel.add(write);
-        final TextField result = new TextField();
     }
 
     private void display() {
@@ -77,13 +82,13 @@ public class MiniGUI {
          * Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
-        
+
         frame.pack();
         /*
          * OK, ready to pull the frame onscreen
          */
         frame.setVisible(true);
-        
+
     }
 
     /**
