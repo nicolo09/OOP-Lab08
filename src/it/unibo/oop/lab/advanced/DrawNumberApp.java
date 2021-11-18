@@ -54,6 +54,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
             loadFromFile();
         } catch (IOException e) {
             view.displayError(e.getMessage());
+            quit();
         }
         this.model = new DrawNumberImpl(min, max, attempts);
         this.view.setObserver(this);
