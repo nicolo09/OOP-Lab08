@@ -21,12 +21,13 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
     private int attempts;
 
     private void loadFromFile() throws IOException {
-        /* Load from file */
         try (BufferedReader r = new BufferedReader(new FileReader(FILE_NAME))) {
+            // Iterates all lines
             final Iterator<String> linesIterator = r.lines().iterator();
             while (linesIterator.hasNext()) {
+                // Separate each line in his key-value
                 final String[] param = linesIterator.next().split(SEPARATOR_CHAR);
-
+                // Discriminate parameter
                 switch (param[0].trim()) {
                 case YAML_MINIMUM:
                     min = Integer.parseInt(param[1].trim());
