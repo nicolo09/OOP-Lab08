@@ -14,7 +14,11 @@ public class ControllerImpl implements Controller {
      */
     @Override
     public void setString(final String s) throws IllegalArgumentException {
-        this.current = s;
+        if (s != null) {
+            this.current = s;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     /**
