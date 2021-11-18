@@ -35,8 +35,7 @@ public interface Controller {
      * @throws IllegalArgumentException
      *                                      if s is null
      */
-    @SuppressWarnings("PMD.AvoidUncheckedExceptionsInSignatures")
-    void setString(String s) throws IllegalArgumentException;
+    void setString(String s);
 
     /**
      * 
@@ -56,6 +55,5 @@ public interface Controller {
      * @throws IllegalStateException
      *                                   if the current string is unset
      */
-    @SuppressWarnings("PMD.AvoidUncheckedExceptionsInSignatures")
-    void printCurrent() throws IllegalStateException;
+    void printCurrent();
 }

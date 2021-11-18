@@ -9,11 +9,10 @@ public class ControllerImpl implements Controller {
     private final List<String> printList = new ArrayList<>();
 
     /**
-     * Sets a string as the current of this controller.
-     * 
+     * {@inheritDoc}
      */
     @Override
-    public void setString(final String s) throws IllegalArgumentException {
+    public void setString(final String s) {
         if (s != null) {
             this.current = s;
         } else {
@@ -22,7 +21,7 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * @return the current set string
+     * {@inheritDoc}
      */
     @Override
     public String getString() {
@@ -30,7 +29,7 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * @return the printing history
+     * {@inheritDoc}
      */
     @Override
     public List<String> history() {
@@ -38,10 +37,10 @@ public class ControllerImpl implements Controller {
     }
 
     /**
-     * Prints the current set string on stdout.
+     * {@inheritDoc}
      */
     @Override
-    public void printCurrent() throws IllegalStateException {
+    public void printCurrent() {
         if (current != null) {
             System.out.println(this.current);
             printList.add(this.current);
