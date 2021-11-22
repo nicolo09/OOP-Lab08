@@ -3,7 +3,9 @@ package it.unibo.oop.lab.advanced;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  */
@@ -15,7 +17,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
     private static final String YAML_MAXIMUM = "maximum";
     private static final String YAML_ATTEMPTS = "attempts";
     private final DrawNumber model;
-    private final DrawNumberView view;
+    private final List<DrawNumberView> views;
     private int min;
     private int max;
     private int attempts;
@@ -49,27 +51,38 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      * 
      */
     public DrawNumberApp() {
-        this.view = new DrawNumberViewImpl();
+        views = new ArrayList<>();
+        this.views.add(new DrawNumberViewImpl());
         try {
             loadFromFile();
         } catch (IOException e) {
-            view.displayError(e.getMessage());
+            for (final DrawNumberView view : this.views) {
+                view.displayError(e.getMessage());
+            }
             quit();
         }
         this.model = new DrawNumberImpl(min, max, attempts);
-        this.view.setObserver(this);
-        this.view.start();
+        for (final DrawNumberView view : this.views) {
+            view.setObserver(this);
+            view.start();
+        }
     }
 
     @Override
     public void newAttempt(final int n) {
         try {
             final DrawResult result = model.attempt(n);
-            this.view.result(result);
+            for (final DrawNumberView view : this.views) {
+                view.result(result);
+            }
         } catch (IllegalArgumentException e) {
-            this.view.numberIncorrect();
+            for (final DrawNumberView view : this.views) {
+                view.numberIncorrect();
+            }
         } catch (AttemptsLimitReachedException e) {
-            view.limitsReached();
+            for (final DrawNumberView view : this.views) {
+                view.limitsReached();
+            }
         }
     }
 
