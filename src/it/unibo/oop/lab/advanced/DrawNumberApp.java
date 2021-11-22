@@ -1,6 +1,7 @@
 package it.unibo.oop.lab.advanced;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
  */
 public final class DrawNumberApp implements DrawNumberViewObserver {
 
-    private static final String FILE_NAME = "res" + System.getProperty("file.separator") + "config.yml";
+    private static final String CONFIG_FILE_NAME = "res" + System.getProperty("file.separator") + "config.yml";
+    private static final String LOG_FILE_NAME = "res" + System.getProperty("file.separator") + "log.txt";
     private static final String SEPARATOR_CHAR = ":";
     private static final String YAML_MINIMUM = "minimum";
     private static final String YAML_MAXIMUM = "maximum";
@@ -23,7 +25,7 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
     private int attempts;
 
     private void loadFromFile() throws IOException {
-        try (BufferedReader r = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader r = new BufferedReader(new FileReader(CONFIG_FILE_NAME))) {
             // Iterates all lines
             final Iterator<String> linesIterator = r.lines().iterator();
             while (linesIterator.hasNext()) {
@@ -52,7 +54,10 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
      */
     public DrawNumberApp() {
         views = new ArrayList<>();
+        //Swing view
         this.views.add(new DrawNumberViewImpl());
+        //Write on file view
+        this.views.add(new DrawNumberViewOnFile(new File(LOG_FILE_NAME)));
         try {
             loadFromFile();
         } catch (IOException e) {
