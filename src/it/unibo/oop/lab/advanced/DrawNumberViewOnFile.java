@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 
-
 public class DrawNumberViewOnFile implements DrawNumberView {
 
-    private DrawNumberViewObserver observer;
     private PrintStream output;
     private static final String NEW_GAME = ": a new game starts!";
 
@@ -16,7 +14,6 @@ public class DrawNumberViewOnFile implements DrawNumberView {
             output = new PrintStream(file.getPath());
         } catch (IOException e) {
             e.printStackTrace();
-            observer.quit();
         }
     }
 
@@ -25,7 +22,6 @@ public class DrawNumberViewOnFile implements DrawNumberView {
      */
     @Override
     public void setObserver(final DrawNumberViewObserver observer) {
-        this.observer = observer;
     }
 
     /**
