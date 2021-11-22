@@ -2,6 +2,7 @@ package it.unibo.oop.lab.advanced;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +58,13 @@ public final class DrawNumberApp implements DrawNumberViewObserver {
         //Swing view
         this.views.add(new DrawNumberViewImpl());
         //Write on file view
-        this.views.add(new DrawNumberViewOnFile(new File(LOG_FILE_NAME)));
+        try {
+            this.views.add(new DrawNumberViewOnFile(new File(LOG_FILE_NAME)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        //Write on stdout view
+        this.views.add(new DrawNumberViewOnStdout());
         try {
             loadFromFile();
         } catch (IOException e) {
